@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saifura - あなたの時間は、もっと価値がある</title>
+    <meta name="description" content="支出を労働時間に変換する革新的家計簿アプリSaifura。お金の管理から時間の投資へ。">
+    <meta name="keywords" content="家計簿,時間価値,労働時間,支出管理,投資対効果,人生最適化">
+    <meta property="og:title" content="Saifura - あなたの時間は、もっと価値がある">
+    <meta property="og:description" content="そのスタバ500円、あなたの労働18分です。支出を時間で可視化する革新的家計簿アプリ">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/og-image.jpg">
+    <link rel="icon" href="/favicon.ico">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #1a1a2e;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><g fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.03"><circle cx="22" cy="22" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="46" cy="22" r="2"/><circle cx="22" cy="46" r="2"/><circle cx="46" cy="46" r="2"/></g></g></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-60px, -60px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #f39c12, #e74c3c, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .shock-demo {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(243, 156, 18, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(243, 156, 18, 0.6); }
+        }
+
+        .amount-input {
+            font-size: 2rem;
+            background: transparent;
+            border: none;
+            color: #f39c12;
+            text-align: center;
+            width: 200px;
+            border-bottom: 2px solid #f39c12;
+            margin: 1rem;
+            padding: 0.5rem;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-bottom-color: #e74c3c;
+        }
+
+        .time-result {
+            font-size: 2.5rem;
+            color: #2ecc71;
+            font-weight: bold;
+            margin: 1rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .time-result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(243, 156, 18, 0.5);
+        }
+
+        /* 問題提起セクション */
+        .problem {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f23 100%);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f39c12, #e74c3c);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .problem-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f39c12, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ソリューションセクション */
+        .solution {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            position: relative;
+        }
+
+        .solution-visual {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .before-after {
+            flex: 1;
+            text-align: center;
+        }
+
+        .before, .after {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .before {
+            border: 2px solid #e74c3c;
+        }
+
+        .after {
+            border: 2px solid #2ecc71;
+            transform: scale(1.05);
+        }
+
+        .arrow {
+            font-size: 3rem;
+            color: #f39c12;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(5px); }
+        }
+
+        /* 機能紹介セクション */
+        .features {
+            padding: 6rem 0;
+            background: #0f0f23;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(46, 204, 113, 0.1));
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .feature-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(45deg) translate(-200%, -200%); }
+            100% { transform: rotate(45deg) translate(200%, 200%); }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(243, 156, 18, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #f39c12, #e74c3c, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 体験デモセクション */
+        .demo {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .demo-interface {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem auto;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-input-group {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .demo-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            color: white;
+            font-size: 1.2rem;
+            min-width: 200px;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: #f39c12;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .conversion-display {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.3);
+        }
+
+        .conversion-result {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 1rem 0;
+        }
+
+        /* ユーザーボイスセクション */
+        .testimonials {
+            padding: 6rem 0;
+            background: #0f0f23;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #2ecc71;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* 利用開始の流れセクション */
+        .steps {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+
+        .step-connector {
+            position: absolute;
+            top: 40px;
+            left: calc(100% - 40px);
+            width: calc(100% - 80px);
+            height: 2px;
+            background: linear-gradient(90deg, #f39c12, #e74c3c);
+            z-index: -1;
+        }
+
+        .step:last-child .step-connector {
+            display: none;
+        }
+
+        /* FAQセクション */
+        .faq {
+            padding: 6rem 0;
+            background: #0f0f23;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: white;
+            text-align: left;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 1.5rem;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* 最終CTAセクション */
+        .final-cta {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(243, 156, 18, 0.1) 0%, transparent 70%);
+            animation: pulse-bg 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .final-cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .urgency-text {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.5; }
+        }
+
+        /* フッター */
+        .footer {
+            background: #0f0f23;
+            padding: 3rem 0 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #f39c12;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #f39c12;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .solution-visual {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .steps-container {
+                flex-direction: column;
+            }
+
+            .step-connector {
+                display: none;
+            }
+
+            .demo-input-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .shock-demo {
+                padding: 2rem 1rem;
+            }
+
+            .amount-input {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .cta-button {
+                display: block;
+                margin: 0.5rem auto;
+                max-width: 300px;
+            }
+        }
+
+        /* アニメーション用クラス */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.6s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>そのスタバ500円、<br>あなたの労働18分です</h1>
+                
+                <div class="shock-demo">
+                    <p style="font-size: 1.2rem; margin-bottom: 1rem;">支出金額を入力してみてください</p>
+                    <input type="number" class="amount-input" id="heroAmount" placeholder="500" value="500">
+                    <span style="font-size: 1.5rem;">円</span>
+                    <div class="time-result show" id="heroTimeResult">= あなたの労働 18分</div>
+                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">
+                        ※時給1,600円で計算
+                    </p>
+                </div>
+
+                <p class="hero-tagline">あなたの時間は、もっと価値がある</p>
+                <div>
+                    <a href="#demo" class="cta-button">今すぐ無料で衝撃体験</a>
+                    <a href="#features" class="cta-button" style="background: transparent; border: 2px solid #f39c12;">あなたの時給を診断してみる</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 問題提起セクション -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title fade-in">なぜ家計簿アプリは続かないのか？</h2>
+            <div class="problem-grid">
+                <div class="problem-card fade-in">
+                    <h3 style="color: #e74c3c; font-size: 1.5rem; margin-bottom: 1rem;">❌ 金額だけでは実感できない</h3>
+                    <p>「3,000円使った」と記録しても、その重みを実感できません。数字だけでは心に響かないのです。</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <h3 style="color: #e74c3c; font-size: 1.5rem; margin-bottom: 1rem;">❌ 継続のモチベーションがない</h3>
+                    <p>単純な収支記録では飽きてしまい、結局使わなくなる。これまでの家計簿の限界です。</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <h3 style="color: #e74c3c; font-size: 1.5rem; margin-bottom: 1rem;">❌ 支出の本当の価値が見えない</h3>
+                    <p>そのお金を稼ぐために、どれだけの時間と労力を費やしたか。これまで可視化されていませんでした。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ソリューション提示セクション -->
+    <section class="solution">
+        <div class="container">
+            <h2 class="section-title fade-in">お金の管理から、時間の投資へ</h2>
+            <div class="solution-visual">
+                <div class="before-after slide-in-left">
+                    <h3 style="color: #e74c3c; margin-bottom: 1rem;">従来の家計簿</h3>
+                    <div class="before">
+                        <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">スタバ代</p>
+                        <p style="font-size: 2rem; color: #e74c3c;">-500円</p>
+                        <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">ただの数字...</p>
+                    </div>
+                </div>
+                
+                <div class="arrow">→</div>
+                
+                <div class="before-after slide-in-right">
+                    <h3 style="color: #2ecc71; margin-bottom: 1rem;">Saifura</h3>
+                    <div class="after">
+                        <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">スタバ代</p>
+                        <p style="font-size: 2rem; color: #2ecc71;">あなたの労働18分</p>
+                        <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">衝撃の実感！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <p style="font-size: 1.3rem; color: rgba(255,255,255,0.9);">
+                    支出を労働時間に変換することで、<br>
+                    <strong style="color: #f39c12;">お金の本当の価値を実感</strong>できます
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 機能紹介セクション -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title fade-in">あなたの意識を変える3つの革新</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #f39c12;">支出→労働時間への瞬間変換</h3>
+                    <p>入力と同時に、あなたの時給をもとに労働時間を自動計算。支出の重みを瞬時に実感できます。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">💫</div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #f39c12;">リアルタイム衝撃体験</h3>
+                    <p>「え、この買い物に3時間も働いたの？」支出の瞬間に意識が変わる、新しい家計簿体験。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎯</div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #f39c12;">3つの表示モードで最適化</h3>
+                    <p>クラシック・時間価値・ハイブリッド表示で、あなたに最適な家計管理スタイルを選択できます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 体験デモセクション -->
+    <section class="demo" id="demo">
+        <div class="container">
+            <h2 class="section-title fade-in">実際に体験してみてください</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(255,255,255,0.8); margin-bottom: 2rem;">
+                入力の瞬間、あなたの価値観が変わる
+            </p>
+            
+            <div class="demo-interface fade-in">
+                <div class="demo-input-group">
+                    <input type="text" class="demo-input" id="expenseItem" placeholder="支出項目 (例: ディナー)" value="ディナー">
+                    <input type="number" class="demo-input" id="expenseAmount" placeholder="金額" value="8000">
+                    <input type="number" class="demo-input" id="hourlyWage" placeholder="あなたの時給" value="2000">
+                </div>
+                
+                <div class="conversion-display">
+                    <p style="font-size: 1.2rem; margin-bottom: 1rem;">支出の労働時間変換結果</p>
+                    <div class="conversion-result" id="conversionResult">
+                        ディナー 8,000円 = あなたの労働 4時間
+                    </div>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">この支出は、あなたの貴重な4時間の労働に相当します</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ユーザーボイスセクション -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title fade-in">利用者の声：意識改革の実体験</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">
+                        「コンビニで何気なく買っていた500円のお菓子が、30分の労働に見えた瞬間、買うのをやめました。無駄遣いが激減しています。」
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div>
+                            <p style="font-weight: bold;">田中さん (28歳)</p>
+                            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">IT企業勤務</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">
+                        「自分の労働時間の価値を初めて実感しました。支出する前に『これは何時間働く価値があるか？』を考えるように。人生が変わりました。」
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div>
+                            <p style="font-weight: bold;">佐藤さん (32歳)</p>
+                            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">フリーランス</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-text">
+                        「従来の家計簿は続きませんでしたが、これは違います。支出のたびに衝撃があるので、自然と意識が変わります。楽しく続けられています。」
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">Y</div>
+                        <div>
+                            <p style="font-weight: bold;">山田さん (26歳)</p>
+                            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">コンサルタント</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 利用開始の流れセクション -->
+    <section class="steps">
+        <div class="container">
+            <h2 class="section-title fade-in">3ステップで人生が変わる</h2>
+            <div class="steps-container">
+                <div class="step fade-in">
+                    <div class="step-number">1</div>
+                    <div class="step-connector"></div>
+                    <h3 style="color: #f39c12; margin-bottom: 1rem;">アプリダウンロード</h3>
+                    <p>App Store / Google Playから無料ダウンロード。30秒で完了します。</p>
+                </div>
+                
+                <div class="step fade-in">
+                    <div class="step-number">2</div>
+                    <div class="step-connector"></div>
+                    <h3 style="color: #f39c12; margin-bottom: 1rem;">あなたの時給を設定</h3>
+                    <p>年収や月収から自動計算、または手動で時給を設定。これがすべての基準になります。</p>
+                </div>
+                
+                <div class="step fade-in">
+                    <div class="step-number">3</div>
+                    <h3 style="color: #f39c12; margin-bottom: 1rem;">支出入力で衝撃体験</h3>
+                    <p>支出を入力した瞬間、労働時間に変換。この瞬間から、あなたの意識が変わります。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQセクション -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title fade-in">よくあるご質問</h2>
+            <div class="faq-container">
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        時給はどのように設定しますか？
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>年収・月収から自動計算できるほか、フリーランスの方は時給を直接入力できます。いつでも変更可能です。</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        プライバシーは保護されますか？
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>すべてのデータは暗号化され、あなたのデバイス内で安全に管理されます。個人情報が外部に漏れることはありません。</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        従来の家計簿機能もありますか？
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>はい。クラシック表示モードで従来通りの金額表示も可能です。時間価値表示との切り替えは自由にできます。</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        料金はかかりますか？
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>基本機能は完全無料です。高度な分析機能を含むプレミアムプランもご用意しています。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最終CTAセクション -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="final-cta-content">
+                <p class="urgency-text">⚡ 限定公開中 ⚡</p>
+                <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem;">
+                    あなたの時間価値、<br>今すぐ体験しませんか？
+                </h2>
+                <p style="font-size: 1.3rem; margin-bottom: 3rem; color: rgba(255,255,255,0.9);">
+                    支出の瞬間に意識が変わる、新しい家計簿体験をお試しください
+                </p>
+                <a href="#" class="cta-button" style="font-size: 1.5rem; padding: 1.5rem 4rem;">
+                    無料ダウンロードで人生を最適化
+                </a>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
+                    iOS・Android対応 | 基本機能完全無料 | 30秒で開始
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Saifura</h3>
+                    <p style="color: rgba(255,255,255,0.7);">
+                        あなたの時間は、もっと価値がある。<br>
+                        革新的な家計簿アプリで、<br>
+                        支出の意識を変えませんか？
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>アプリ</h3>
+                    <a href="#">iOS版ダウンロード</a>
+                    <a href="#">Android版ダウンロード</a>
+                    <a href="#">機能一覧</a>
+                    <a href="#">料金プラン</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>サポート</h3>
+                    <a href="#">使い方ガイド</a>
+                    <a href="#">よくある質問</a>
+                    <a href="#">お問い合わせ</a>
+                    <a href="#">プライバシーポリシー</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>コミュニティ</h3>
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">ユーザーコミュニティ</a>
+                    <a href="#">ブログ</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Saifura. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // スクロールアニメーション
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // ヒーローセクションの時間計算
+        function updateHeroTime() {
+            const amount = document.getElementById('heroAmount').value;
+            const hourlyWage = 1600; // 固定時給
+            const timeResult = document.getElementById('heroTimeResult');
+            
+            if (amount && amount > 0) {
+                const minutes = Math.round((amount / hourlyWage) * 60);
+                const hours = Math.floor(minutes / 60);
+                const remainingMinutes = minutes % 60;
+                
+                let timeText = '= あなたの労働 ';
+                if (hours > 0) {
+                    timeText += `${hours}時間`;
+                    if (remainingMinutes > 0) {
+                        timeText += `${remainingMinutes}分`;
+                    }
+                } else {
+                    timeText += `${remainingMinutes}分`;
+                }
+                
+                timeResult.textContent = timeText;
+                timeResult.classList.add('show');
+            } else {
+                timeResult.classList.remove('show');
+            }
+        }
+
+        // デモセクションの計算
+        function updateDemoConversion() {
+            const item = document.getElementById('expenseItem').value || 'アイテム';
+            const amount = document.getElementById('expenseAmount').value;
+            const wage = document.getElementById('hourlyWage').value;
+            const result = document.getElementById('conversionResult');
+            
+            if (amount && wage && amount > 0 && wage > 0) {
+                const hours = amount / wage;
+                const wholeHours = Math.floor(hours);
+                const minutes = Math.round((hours - wholeHours) * 60);
+                
+                let timeText = '';
+                if (wholeHours > 0) {
+                    timeText += `${wholeHours}時間`;
+                    if (minutes > 0) {
+                        timeText += `${minutes}分`;
+                    }
+                } else {
+                    timeText += `${minutes}分`;
+                }
+                
+                result.textContent = `${item} ${Number(amount).toLocaleString()}円 = あなたの労働 ${timeText}`;
+            }
+        }
+
+        // FAQ トグル
+        function initFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        }
+
+        // イベントリスナー
+        document.addEventListener('scroll', animateOnScroll);
+        document.addEventListener('DOMContentLoaded', () => {
+            animateOnScroll();
+            initFAQ();
+            updateHeroTime();
+            updateDemoConversion();
+        });
+
+        document.getElementById('heroAmount').addEventListener('input', updateHeroTime);
+        document.getElementById('expenseItem').addEventListener('input', updateDemoConversion);
+        document.getElementById('expenseAmount').addEventListener('input', updateDemoConversion);
+        document.getElementById('hourlyWage').addEventListener('input', updateDemoConversion);
+
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // CTA ボタンのクリック追跡（実際のアプリでは分析ツールと連携）
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('CTA clicked:', this.textContent);
+                // ここで実際のダウンロードページへリダイレクト
+                // window.location.href = 'download-page-url';
+            });
+        });
+    </script>
+</body>
+</html>
