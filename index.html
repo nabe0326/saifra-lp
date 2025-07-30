@@ -66,11 +66,13 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            font-weight: 900;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #f39c12, #e74c3c, #2ecc71);
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #ffffff 0%, #f39c12 30%, #e74c3c 70%, #2ecc71 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -270,11 +272,25 @@
             color: #f39c12;
             animation: bounce 2s infinite;
         }
+        
+        .arrow-mobile {
+            display: none;
+        }
+        
+        .arrow-desktop {
+            display: inline;
+        }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
             40% { transform: translateX(10px); }
             60% { transform: translateX(5px); }
+        }
+        
+        @keyframes bounce-vertical {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(10px); }
+            60% { transform: translateY(5px); }
         }
 
         /* 機能紹介セクション */
@@ -355,20 +371,23 @@
 
         .demo-input-group {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             margin: 2rem 0;
             flex-wrap: wrap;
             justify-content: center;
+            align-items: flex-start;
         }
 
         .demo-input {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            padding: 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            padding: 1.2rem;
             color: white;
-            font-size: 1.2rem;
-            min-width: 200px;
+            font-size: 1.3rem;
+            min-width: 180px;
+            text-align: center;
+            font-weight: 500;
         }
 
         .demo-input:focus {
@@ -603,44 +622,221 @@
                 padding: 0 15px;
             }
 
+            .hero {
+                padding: 2rem 0;
+                min-height: 90vh;
+            }
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 1.6rem;
+                line-height: 1.4;
+                margin-bottom: 1rem;
+            }
+
+            .hero-tagline {
+                font-size: 1.2rem;
+                margin: 1.5rem 0;
+            }
+
+            .shock-demo {
+                padding: 1.5rem 1rem;
+                margin: 1.5rem auto;
+            }
+
+            .amount-input {
+                width: 100%;
+                max-width: 200px;
+                font-size: 1.5rem;
+            }
+
+            .time-result {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .problem-card {
+                padding: 1.5rem;
             }
 
             .solution-visual {
                 flex-direction: column;
+                gap: 2rem;
             }
 
             .arrow {
-                transform: rotate(90deg);
+                font-size: 2rem;
+                animation: bounce-vertical 2s infinite;
+            }
+            
+            .arrow-desktop {
+                display: none;
+            }
+            
+            .arrow-mobile {
+                display: inline;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 3rem;
             }
 
             .steps-container {
                 flex-direction: column;
+                gap: 3rem;
+            }
+
+            .step {
+                min-width: auto;
             }
 
             .step-connector {
                 display: none;
             }
 
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                padding: 2rem;
+            }
+
+            .demo-interface {
+                padding: 2rem 1rem;
+            }
+
             .demo-input-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+            
+            .demo-input-group > div {
+                width: 100%;
+                max-width: 250px;
+                display: flex;
                 flex-direction: column;
                 align-items: center;
             }
 
-            .shock-demo {
-                padding: 2rem 1rem;
+            .demo-input {
+                min-width: 200px;
+                font-size: 1.1rem;
             }
 
-            .amount-input {
-                width: 100%;
-                max-width: 250px;
+            .conversion-result {
+                font-size: 1.8rem;
             }
 
             .cta-button {
                 display: block;
                 margin: 0.5rem auto;
+                max-width: 260px;
+                font-size: 0.95rem;
+                padding: 0.9rem 1.8rem;
+                line-height: 1.3;
+                font-weight: 600;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            }
+            
+            .final-cta-button {
                 max-width: 300px;
+                width: 80%;
+                font-size: 1.1rem;
+                padding: 1.2rem 2rem;
+                line-height: 1.4;
+            }
+
+            .faq-question {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+
+            .faq-answer {
+                padding: 0 1rem;
+            }
+
+            .faq-item.active .faq-answer {
+                padding: 1rem;
+            }
+        }
+
+        /* 更に小さな画面用 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+
+            .shock-demo {
+                padding: 1rem;
+            }
+
+            .amount-input {
+                max-width: 180px;
+                font-size: 1.3rem;
+            }
+
+            .time-result {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .problem-card,
+            .feature-card,
+            .testimonial-card {
+                padding: 1rem;
+            }
+
+            .demo-input {
+                min-width: 160px;
+                font-size: 1rem;
+                padding: 1rem;
+            }
+
+            .conversion-result {
+                font-size: 1.4rem;
+            }
+
+            .cta-button {
+                font-size: 0.85rem;
+                padding: 0.8rem 1.4rem;
+                max-width: 240px;
+                line-height: 1.2;
+                font-weight: 600;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+            }
+            
+            .final-cta-button {
+                max-width: 280px;
+                width: 85%;
+                font-size: 1rem;
+                padding: 1rem 1.8rem;
+                line-height: 1.3;
             }
         }
 
@@ -684,7 +880,7 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>そのスタバ500円、<br>あなたの労働19分です</h1>
+                <h1>あなたが毎日買っている<br><span style="font-size: 1.2em; color: #f39c12;">500円のコーヒー</span><br>毎月XX時間分の労働を<br><span style="font-size: 1.1em; color: #e74c3c;">ムダにしています。</span></h1>
                 
                 <div class="shock-demo">
                     <p style="font-size: 1.2rem; margin-bottom: 1rem;">支出金額を入力してみてください</p>
@@ -734,18 +930,18 @@
                 <div class="before-after slide-in-left">
                     <h3 style="color: #e74c3c; margin-bottom: 1rem;">従来の家計簿</h3>
                     <div class="before">
-                        <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">スタバ代</p>
+                        <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">コーヒー代</p>
                         <p style="font-size: 2rem; color: #e74c3c;">-500円</p>
                         <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">ただの数字...</p>
                     </div>
                 </div>
                 
-                <div class="arrow">→</div>
+                <div class="arrow"><span class="arrow-desktop">→</span><span class="arrow-mobile">↓</span></div>
                 
                 <div class="before-after slide-in-right">
                     <h3 style="color: #2ecc71; margin-bottom: 1rem;">Saifura</h3>
                     <div class="after">
-                        <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">スタバ代</p>
+                        <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">コーヒー代</p>
                         <p style="font-size: 2rem; color: #2ecc71;">あなたの労働19分</p>
                         <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">衝撃の実感！</p>
                     </div>
@@ -779,7 +975,7 @@
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🎯</div>
                     <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #f39c12;">2つの表示モードで最適化</h3>
-                    <p>クラシック・ハイブリッド表示で、あなたに最適な家計管理スタイルを選択できます。</p>
+                    <p>クラシック・時間価値表示で、あなたに最適な家計管理スタイルを選択できます。</p>
                 </div>
             </div>
         </div>
@@ -795,14 +991,26 @@
             
             <div class="demo-interface fade-in">
                 <div class="demo-input-group">
-                    <input type="text" class="demo-input" id="expenseItem" placeholder="支出項目 (例: ディナー)" value="ディナー">
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <input type="number" class="demo-input" id="expenseAmount" placeholder="金額" value="8000">
-                        <span style="color: white; font-size: 1.2rem;">円</span>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.8rem;">
+                        <label style="color: rgba(255,255,255,0.9); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">支出項目</label>
+                        <div style="display: flex; align-items: center; gap: 0.8rem;">
+                            <input type="text" class="demo-input" id="expenseItem" placeholder="支出項目 (例: ディナー)" value="ディナー">
+                            <span style="color: transparent; font-size: 1.4rem; font-weight: 600; visibility: hidden;">円</span>
+                        </div>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <input type="number" class="demo-input" id="hourlyWage" placeholder="あなたの時給" value="2000">
-                        <span style="color: white; font-size: 1.2rem;">円</span>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.8rem;">
+                        <label style="color: #f39c12; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">金額</label>
+                        <div style="display: flex; align-items: center; gap: 0.8rem;">
+                            <input type="number" class="demo-input" id="expenseAmount" placeholder="8000" value="8000">
+                            <span style="color: white; font-size: 1.4rem; font-weight: 600;">円</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.8rem;">
+                        <label style="color: #2ecc71; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">時給</label>
+                        <div style="display: flex; align-items: center; gap: 0.8rem;">
+                            <input type="number" class="demo-input" id="hourlyWage" placeholder="2000" value="2000">
+                            <span style="color: white; font-size: 1.4rem; font-weight: 600;">円</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -872,8 +1080,8 @@
                 <div class="step fade-in">
                     <div class="step-number">1</div>
                     <div class="step-connector"></div>
-                    <h3 style="color: #f39c12; margin-bottom: 1rem;">アプリダウンロード</h3>
-                    <p>App Store / Google Playから無料ダウンロード。30秒で完了します。</p>
+                    <h3 style="color: #f39c12; margin-bottom: 1rem;">会員登録</h3>
+                    <p>メールアドレスとパスワードで簡単登録。30秒で完了します。</p>
                 </div>
                 
                 <div class="step fade-in">
@@ -944,19 +1152,15 @@
     <section class="final-cta" id="final-cta">
         <div class="container">
             <div class="final-cta-content">
-                <p class="urgency-text">⚡ 限定公開中 ⚡</p>
                 <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem;">
                     あなたの時間価値、<br>今すぐ体験しませんか？
                 </h2>
                 <p style="font-size: 1.3rem; margin-bottom: 3rem; color: rgba(255,255,255,0.9);">
                     支出の瞬間に意識が変わる、新しい家計簿体験をお試しください
                 </p>
-                <a href="#" class="cta-button" style="font-size: 1.5rem; padding: 1.5rem 4rem;">
-                    無料ダウンロードで人生を最適化
+                <a href="https://saifura-git-main-naoto-nakahashis-projects.vercel.app/" target="_blank" class="cta-button final-cta-button" style="font-size: 1.5rem; padding: 1.5rem 4rem;">
+                    会員登録で<br>人生を最適化
                 </a>
-                <p style="margin-top: 2rem; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
-                    iOS・Android対応 | 基本機能完全無料 | 30秒で開始
-                </p>
             </div>
         </div>
     </section>
@@ -1078,10 +1282,15 @@
         // CTA ボタンのクリック追跡（実際のアプリでは分析ツールと連携）
         document.querySelectorAll('.cta-button').forEach(button => {
             button.addEventListener('click', function(e) {
-                e.preventDefault();
                 console.log('CTA clicked:', this.textContent);
-                // ここで実際のダウンロードページへリダイレクト
-                // window.location.href = 'download-page-url';
+                // 最終CTAボタンの場合は実際のリンクを開く
+                if (this.classList.contains('final-cta-button')) {
+                    // target="_blank"があるので、自然にリンクが開かれる
+                    return true;
+                } else {
+                    // 他のCTAボタンは従来通り
+                    e.preventDefault();
+                }
             });
         });
     </script>
